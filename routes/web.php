@@ -18,8 +18,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/kelola-produk', [KelolaProdukController::class, 'index'])->name('produk');
-    Route::post('/kelola-produk/tambah-category', [KelolaProdukController::class, 'storeCategory'])->name('tambah.category');
-    Route::post('/kelola-produk/tambah-product', [KelolaProdukController::class, 'storeProduct'])->name('tambah.produk');
+    Route::post('/kelola-produk/tambah-kategori', [KelolaProdukController::class, 'storeCategory'])->name('tambah.category');
+    Route::put('/kelola-produk/update-kategori', [KelolaProdukController::class, 'updateCategory'])->name('edit.category');
+    Route::delete('/kelola-produk/hapus-kategori', [KelolaProdukController::class, 'destroyCategory'])->name('hapus.category');
+
+    Route::post('/kelola-produk/tambah-produk', [KelolaProdukController::class, 'storeProduct'])->name('tambah.produk');
+    Route::delete('/kelola-produk/hapus-produk', [KelolaProdukController::class, 'destroyProduct'])->name('hapus.produk');
+
 
 });
 

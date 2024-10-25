@@ -40,12 +40,12 @@ Kelola Produk
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $ct->name }}</td>
                         <td>
-                            <x-button-action style="background-color: #415643;" data-bs-toggle="modal" data-bs-target="#editProject"
+                            <x-button-action style="background-color: #415643;" data-bs-toggle="modal" data-bs-target="#editCategory"
                                 data-id="{{ $ct->id }}" data-name="{{ $ct->name }}"
                                 title="Edit Data Kategori">
                                 <i class="bi bi-pencil text-white"></i>
                             </x-button-action>
-                            <x-button-action style="background-color: #E33437;" data-bs-toggle="modal" data-bs-target="#hapusProject"
+                            <x-button-action style="background-color: #E33437;" data-bs-toggle="modal" data-bs-target="#hapusCategory"
                                 data-id="{{ $ct->id }}" data-name="{{ $ct->name }}"
                                 title="Hapus Data Kategori">
                                 <i class="bi bi-trash text-white"></i>
@@ -94,12 +94,12 @@ Kelola Produk
                             @endif
                         </td>
                         <td>
-                            <x-button-action style="background-color: #415643;" data-bs-toggle="modal" data-bs-target="#editProject"
+                            <x-button-action style="background-color: #415643;" data-bs-toggle="modal" data-bs-target="#editProduct"
                                 data-id="{{ $pd->id }}" data-name="{{ $pd->name }}"
                                 title="Edit Data Produk">
                                 <i class="bi bi-pencil text-white"></i>
                             </x-button-action>
-                            <x-button-action style="background-color: #E33437;" data-bs-toggle="modal" data-bs-target="#hapusProject"
+                            <x-button-action style="background-color: #E33437;" data-bs-toggle="modal" data-bs-target="#hapusProduct"
                                 data-id="{{ $pd->id }}" data-name="{{ $pd->name }}"
                                 title="Hapus Data Produk">
                                 <i class="bi bi-trash text-white"></i>
@@ -107,7 +107,7 @@ Kelola Produk
                         </td>
                     </tr>
                     @empty
-                   
+
                     @endforelse
                 </tbody>
             </table>
@@ -115,7 +115,7 @@ Kelola Produk
     </div>
 
 
-    <!-- card addProject modal -->
+    <!-- card addCategory modal -->
     <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -146,6 +146,75 @@ Kelola Produk
         </div>
     </div>
     <!--end card modal -->
+
+     <!-- card editCategory modal -->
+     <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-transparent">
+                    <h3 class="text-center" id="addNewCardTitle">Edit Blok</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-sm-5 mx-50 pb-5">
+                    <!-- form -->
+                    <form class="form row gy-1 gx-2 mt-75" method="POST" action="{{ route('edit.category') }}">
+                        @method('put')
+                        @csrf
+                        <input id="id" name="id" class="form-control" type="text" hidden />
+                        <div class="col-12">
+                            <label class="form-label" for="name">Nama</label>
+                            <div class="input-group input-group-merge">
+                                <input id="name" name="name" class="form-control" type="text" required />
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-1 mt-1">Edit</button>
+                            <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                                kembali
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end card modal -->
+
+
+    <!-- card hapusCategory modal -->
+    <div class="modal fade" id="hapusCategory" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-transparent">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-sm-5 mx-50 pb-5">
+                    <h3 class="text-center mb-1" id="addNewCardTitle">Hapus Kategori</h3>
+                    <p class="text-center">Kamu yakin ingin menghapus data ini?</p>
+                    <!-- form -->
+                    <form class="form row gy-1 gx-2 mt-75" method="POST" action="{{ route('hapus.category') }}">
+                        @method('delete')
+                        @csrf
+                        <input type="text" name="id" id="id" hidden>
+                        <div class="col-12">
+                            <label class="form-label" for="name">Nama</label>
+                            <div class="input-group input-group-merge">
+                                <input id="name" name="name" class="form-control" type="text" disabled />
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-danger me-1 mt-1">Hapus</button>
+                            <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                                Kembali
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end card modal -->
+
 
     <!-- card addProduct modal -->
     <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="addNewProductTitle" aria-hidden="true">
@@ -189,10 +258,44 @@ Kelola Produk
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="image">Gambar</label>
-                            <input id="image" name="image" class="form-control" type="file" accept="image/*" />
+                            <input id="image" name="image" class="form-control" type="file" accept="image/*" required/>
                         </div>
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-primary me-1 mt-1">Tambah</button>
+                            <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
+                                Kembali
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end card modal -->
+
+    <!-- card hapusCategory modal -->
+    <div class="modal fade" id="hapusProduct" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-transparent">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-sm-5 mx-50 pb-5">
+                    <h3 class="text-center mb-1" id="addNewCardTitle">Hapus Produk</h3>
+                    <p class="text-center">Kamu yakin ingin menghapus data ini?</p>
+                    <!-- form -->
+                    <form class="form row gy-1 gx-2 mt-75" method="POST" action="{{ route('hapus.produk') }}">
+                        @method('delete')
+                        @csrf
+                        <input type="text" name="id" id="id" hidden>
+                        <div class="col-12">
+                            <label class="form-label" for="name">Nama</label>
+                            <div class="input-group input-group-merge">
+                                <input id="name" name="name" class="form-control" type="text" disabled />
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-danger me-1 mt-1">Hapus</button>
                             <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-dismiss="modal" aria-label="Close">
                                 Kembali
                             </button>
@@ -259,6 +362,64 @@ Kelola Produk
                 "lengthMenu": "Menampilkan _MENU_ data per halaman",
             }
         });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#editCategory').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var name = button.data('name');
+
+            var modal = $(this);
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #name').val(name);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#hapusCategory').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id)
+            modal.find('.modal-body #name').val(name)
+
+        })
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#hapusProduct').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id)
+            modal.find('.modal-body #name').val(name)
+
+        })
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#hapusCategory').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id)
+            modal.find('.modal-body #name').val(name)
+
+        })
     });
 </script>
 

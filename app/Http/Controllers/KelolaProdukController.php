@@ -43,6 +43,32 @@ class KelolaProdukController extends Controller
         }
     }
 
+    public function updateCategory(Request $request)
+    {
+        try {
+            // Validasi data input jika diperlukan
+            $request->validate([
+                'name' => 'required',
+            ]);
+
+            // Temukan user berdasarkan ID
+            $category = CategoryProduct::where('id', $request->id)->firstOrFail();
+
+            $category->update([
+                'name' => $request->name,
+            ]);
+
+            // Redirect dan alert toast sukses
+            Alert::toast('Data Project Berhasil Diubah.', 'success')->autoClose(10000);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // Menampilkan pesan kesalahan jika terjadi pengecualian
+            Alert::toast('Terjadi kesalahan: ' . $e->getMessage(), 'error')->autoClose(10000);
+
+            return redirect()->back();
+        }
+    }
+
     public function storeProduct(Request $request)
     {
         try {
@@ -58,7 +84,7 @@ class KelolaProdukController extends Controller
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('images', 'public'); // Ganti 'img' dengan 'images'
             }
-            
+
 
             // Membuat entri produk baru
             $product = Product::create([
@@ -73,6 +99,42 @@ class KelolaProdukController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             Alert::toast('Terjadi Kesalahan: ' . $e->getMessage(), 'error')->autoClose(10000);
+            return redirect()->back();
+        }
+    }
+
+    public function destroyCategory(Request $request)
+    {
+        try {
+            $category = CategoryProduct::where('id', $request->id)->firstOrFail();
+
+            $category->delete($category);
+
+            Alert::toast('Data Kategori Berhasil Dihapus.', 'success')->autoClose(10000);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // Menampilkan pesan kesalahan jika terjadi pengecualian
+            Alert::toast('Terjadi kesalahan: ' . $e->getMessage(), 'error')->autoClose(10000);
+
+            return redirect()->back();
+        }
+    }
+
+    public function destroyProduct(Request $request)
+    {
+        try {
+            $product = Product::where('id', $request->id)->firstOrFail();
+
+            $product->delete($product);
+
+            Alert::toast('Data Produk Berhasil Dihapus.', 'success')->autoClose(10000);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // Menampilkan pesan kesalahan jika terjadi pengecualian
+            Alert::toast('Terjadi kesalahan: ' . $e->getMessage(), 'error')->autoClose(10000);
+
             return redirect()->back();
         }
     }
