@@ -95,8 +95,9 @@ Kelola Produk
                         </td>
                         <td>
                             <x-button-action style="background-color: #415643;" data-bs-toggle="modal" data-bs-target="#editProduct"
-                                data-id="{{ $pd->id }}" data-name="{{ $pd->name }}"
-                                title="Edit Data Produk">
+                                data-id="{{ $pd->id }}" data-name="{{ $pd->name }}" data-price="{{ $pd->price }}"
+                                data-stock="{{ $pd->stock }}" data-category-id="{{ $pd->categories_id }}"
+                                data-image-url="{{ $pd->image }}" title="Edit Data Produk">
                                 <i class="bi bi-pencil text-white"></i>
                             </x-button-action>
                             <x-button-action style="background-color: #E33437;" data-bs-toggle="modal" data-bs-target="#hapusProduct"
@@ -147,12 +148,12 @@ Kelola Produk
     </div>
     <!--end card modal -->
 
-     <!-- card editCategory modal -->
-     <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
+    <!-- card editCategory modal -->
+    <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-transparent">
-                    <h3 class="text-center" id="addNewCardTitle">Edit Blok</h3>
+                    <h3 class="text-center" id="addNewCardTitle">Edit Kategori</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body px-sm-5 mx-50 pb-5">
@@ -258,7 +259,7 @@ Kelola Produk
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="image">Gambar</label>
-                            <input id="image" name="image" class="form-control" type="file" accept="image/*" required/>
+                            <input id="image" name="image" class="form-control" type="file" accept="image/*" required />
                         </div>
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-primary me-1 mt-1">Tambah</button>
@@ -273,7 +274,7 @@ Kelola Produk
     </div>
     <!--end card modal -->
 
-    <!-- card hapusCategory modal -->
+    <!-- card hapusProduk modal -->
     <div class="modal fade" id="hapusProduct" tabindex="-1" aria-labelledby="addNewCardTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -397,20 +398,6 @@ Kelola Produk
 <script>
     $(document).ready(function() {
         $('#hapusProduct').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var name = button.data('name')
-
-            var modal = $(this)
-            modal.find('.modal-body #id').val(id)
-            modal.find('.modal-body #name').val(name)
-
-        })
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $('#hapusCategory').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
             var name = button.data('name')
